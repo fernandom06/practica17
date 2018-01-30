@@ -60,8 +60,9 @@ if (isset($_GET["error"])){
     //Capa para el error
     if (isset($error)){
         echo "<div id='error'>";
-        if ($error==1 || $error==2) echo "<p>Faltan datos</p>";
+        if ($error==1 || $error==2 || $error==4) echo "<p>Faltan datos</p>";
         elseif ($error==3) echo "<p>La contraseña no cumple los requisitos o no coinciden</p>";
+        elseif ($error==5) echo "<p>Usuario o contraseña incorrectos</p>";
         elseif ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
         elseif ($error==1062) echo "<p>El login ya esta en uso</p>";
         elseif ($error==1048 || $error==1364) echo "<p>Los datos estan mal introducidos</p>";
