@@ -1,3 +1,8 @@
+<?php
+if (isset($_GET["error"])){
+    $error=$_GET["error"];
+}
+?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -37,9 +42,11 @@
         <form action="registro.php" method="post">
             <label for="loginr">Login*</label>
             <input type="text" id="loginr" name="login"><br>
-            <label for="passwordr">Password*</label>
+            <label for="passwordr">Password* (minimo 8 caracteres)</label>
             <input type="password" id="passwordr" name="password"><br>
-            <label for="nombre">Nombre</label>
+            <label for="passwordc">Repite la contraseña</label>
+            <input type="password" id="passwordc" name="passwordc"><br>
+            <label for="nombre">Nombre*</label>
             <input type="text" id="nombre" name="nombre"><br>
             <label for="apelldio1">Primer Apellido*</label>
             <input type="text" id="apelldio1" name="apellido1"><br>
@@ -49,6 +56,18 @@
             <p>Los campos marcados con * son obligatorios</p>
         </form>
     </div>
+    <?php
+    //Capa para el error
+    if (isset($error)){
+        echo "<div id='error'>";
+        if ($error==1 || $error==2) echo "<p>Faltan datos</p>";
+        elseif ($error==3) echo "<p>La contraseña no cumple los requisitos o no coinciden</p>";
+        elseif ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
+        elseif ($error==1062) echo "<p>El login ya esta en uso</p>";
+        elseif ($error==1048 || $error==1364) echo "<p>Los datos estan mal introducidos</p>";
+        echo "</div>";
+    }
+    ?>
 </main>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script>
