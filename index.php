@@ -10,7 +10,7 @@ if (isset($_GET["error"])){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Portada</title>
     <style>
         #login{
             display: none;
@@ -66,6 +66,8 @@ if (isset($_GET["error"])){
         elseif ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
         elseif ($error==1062) echo "<p>El login ya esta en uso</p>";
         elseif ($error==1048 || $error==1364) echo "<p>Los datos estan mal introducidos</p>";
+        elseif ($error==1064) echo "<p>Error al modificar</p>";
+        else echo "<p>Error</p>";
         echo "</div>";
     }
     ?>

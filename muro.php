@@ -1,10 +1,9 @@
 <?php
 session_start();
+if (isset($_GET["error"])) $error=$_GET["error"];
 
 if (isset($_SESSION["login"])){
     $login=$_SESSION["login"];
-}else{
-    //header();
 }
 
 //conexion a la bbdd
@@ -24,7 +23,7 @@ if ($mysqli->connect_errno){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Muro</title>
 </head>
 <body>
 <header>
@@ -56,11 +55,26 @@ if ($mysqli->connect_errno){
         echo "</div>";
         ?>
 </main>
+<?php
+if (isset($error)){
+    echo "<div id='error'>";
+    if ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
+    elseif ($error==1136) echo "<p>Error al introducir los datos a la base de datos</p>";
+    elseif ($error==1) echo "<p>Error con los datos</p>";
+    elseif ($error==1064) echo "<p>Error al modificar</p>";
+    else echo "<p>Error</p>";
+    echo "</div>";
+}
+?>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script>
     $(function () {
         $("#mas").on("click",function () {
             window.location.href="mas/mensaje.php";
+        });
+        $(".modificar").on("click",function () {
+            var id=$(this).attr("id");
+            window.location.href="modificar/modificar.php?id="+id;
         })
     })
 </script>
