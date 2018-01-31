@@ -11,6 +11,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
     }else{
 
         $login=$_POST["login"];
+        //control de contraseña
         if($_POST["password"]==$_POST["passwordc"] && strlen($_POST["password"])>7){
             $password=sha1($_POST["password"]);
         }else{
@@ -18,6 +19,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
         }
         $nombre=$_POST["nombre"];
         $apellido1=$_POST["apellido1"];
+        //ver si se manda el segundo apellido
         if (!$_POST["apellido2"]==''){
             $apellido2=$_POST["apellido2"];
             $sql="INSERT INTO usuarios(nombre, apellido1, apellido2, login, password) VALUES ('$nombre','$apellido1','$apellido2','$login','$password')";
@@ -34,10 +36,14 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
             header('location:index.php?error='.$error);
         }
 
+        //control de errores con la bbdd
         if(!($mysqli->query($sql))){
             $error=$mysqli->errno;
             header('location:index.php?error='.$error);
         }
+        session_start();
+        $_SESSION["login"]=$login;
+        header('location:muro.php');
     }
 }
 

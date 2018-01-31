@@ -30,6 +30,9 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false){
     else{
         header("location:index.php?error=5");
     }
+    session_start();
+    $_SESSION["login"]=$login;
+    header('location:muro.php');
 }
 
 ?>
