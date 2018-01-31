@@ -29,10 +29,11 @@ if ($mysqli->connect_errno){
 <body>
 <header>
     <h1>Bienvenido a tu muro <?=$_SESSION["login"]?></h1>
-    <button>Añadir mensaje</button>
-    <div id="mensajes">
+    <button id="mas">Añadir mensaje</button>
+</header>
+<main>
         <?php
-        $sql="SELECT m.texto texto,m.id_mensaje id_mensaje
+        $sql="SELECT m.texto texto,m.id_mensaje id_mensaje, u.id_usuario id_usuario
                 FROM mensajes m
                 JOIN usuarios u USING (id_usuario)
                 WHERE login='$login'";
@@ -42,17 +43,26 @@ if ($mysqli->connect_errno){
             //header('location:index.php?error='.$error);
         }
         echo "<div id='mensajes'>";
-            while($fila=$resultado->fetch_assoc()){
+        $fila=$resultado->fetch_assoc();
+        $_SESSION["id_usuario"]=$fila["id_usuario"];
+            while($fila){
                 echo "<div id='".$fila['id_mensaje']."'>";
                     echo "<p>".$fila['texto']."</p>";
-                    echo "<button class='eliminar' id='".$fila['id_mensaje']."'>Eliminar Mensaje</button>";
-                    echo "<button class='modificar' id='".$fila['id_mensaje']."'>Modificar Mensaje</button>";
+                    echo "<button class='eliminar' id='e".$fila['id_mensaje']."'>Eliminar Mensaje</button>";
+                    echo "<button class='modificar' id='m".$fila['id_mensaje']."'>Modificar Mensaje</button>";
                 echo "</div>";
+                $fila=$resultado->fetch_assoc();
             }
         echo "</div>";
-
         ?>
-    </div>
-</header>
+</main>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("#mas").on("click",function () {
+            window.location.href="mas/mensaje.php";
+        })
+    })
+</script>
 </body>
 </html>
