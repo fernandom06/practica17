@@ -16,7 +16,7 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
-    header('location:index.php?error='.$error);
+    header('location:../muro.php?error='.$error);
 }
 
 $sql="SELECT texto FROM mensajes WHERE id_mensaje='$id'";

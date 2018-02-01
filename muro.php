@@ -75,6 +75,10 @@ if (isset($error)){
         $(".modificar").on("click",function () {
             var id=$(this).attr("id");
             window.location.href="modificar/modificar.php?id="+id;
+        });
+        $(".eliminar").on("click",function () {
+            var id=$(this).attr("id");
+            window.location.href="eliminar/eliminar.php?id="+id;
         })
     })
 </script>
