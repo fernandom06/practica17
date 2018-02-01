@@ -43,6 +43,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
         }
         session_start();
         $_SESSION["login"]=$login;
+        $_SESSION["id_usuario"]=$mysqli->insert_id;
         header('location:muro.php');
     }
 }

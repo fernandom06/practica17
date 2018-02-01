@@ -15,7 +15,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false){
         header('location:index.php?error='.$error);
     }
 
-    $sql="SELECT count(*) numero FROM usuarios WHERE login='$login' AND password='$password'";
+    $sql="SELECT count(*) numero,id_usuario FROM usuarios WHERE login='$login' AND password='$password'";
 
     if(!($resultado=$mysqli->query($sql))){
         $error=$mysqli->errno;
@@ -25,14 +25,14 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false){
     $fila=$resultado->fetch_assoc();
 
     if ($fila["numero"]==1){
+        session_start();
+        $_SESSION["login"]=$login;
+        $_SESSION["id_usuario"]=$fila["id_usuario"];
         header("location:muro.php");
     }
     else{
         header("location:index.php?error=5");
     }
-    session_start();
-    $_SESSION["login"]=$login;
-    header('location:muro.php');
 }
 
 ?>

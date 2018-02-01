@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id_usuario=$_SESSION["id_usuario"];
 if (isset($_GET["error"])) $error=$_GET["error"];
 
 if (isset($_SESSION["login"])){
@@ -29,6 +30,8 @@ if ($mysqli->connect_errno){
 <header>
     <h1>Bienvenido a tu muro <?=$_SESSION["login"]?></h1>
     <button id="mas">Añadir mensaje</button>
+    <button id="buscar">Buscar Usuarios</button>
+    <button id="salir">Cerrar Sesion</button>
 </header>
 <main>
         <?php
@@ -43,7 +46,7 @@ if ($mysqli->connect_errno){
         }
         echo "<div id='mensajes'>";
         $fila=$resultado->fetch_assoc();
-        $_SESSION["id_usuario"]=$fila["id_usuario"];
+        //$_SESSION["id_usuario"]=$fila["id_usuario"];
             while($fila){
                 echo "<div id='".$fila['id_mensaje']."'>";
                     echo "<p>".$fila['texto']."</p>";
@@ -79,7 +82,13 @@ if (isset($error)){
         $(".eliminar").on("click",function () {
             var id=$(this).attr("id");
             window.location.href="eliminar/eliminar.php?id="+id;
-        })
+        });
+        $("#buscar").on("click",function () {
+            window.location.href="buscar/buscar.html";
+        });
+        $("#salir").on("click",function () {
+            window.location.href="salir.php";
+        });
     })
 </script>
 </body>
