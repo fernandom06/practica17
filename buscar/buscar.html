@@ -20,5 +20,14 @@
     <input type="text" id="login" name="login" placeholder="Busqueda por login">
     <button>Buscar</button>
 </form>
+<button id="atras">Atras</button>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("#atras").on("click",function () {
+            window.location.href = "../muro.php";
+        });
+    })
+</script>
 </body>
 </html>

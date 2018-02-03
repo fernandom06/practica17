@@ -7,6 +7,7 @@ if (isset($_GET["apellido"])==false){
         header("location:../muro.php?error=1");
     }else{
         $apellido=$_GET["apellido"];
+        $id_usuario=$_SESSION["id_usuario"];
     }
 }
 //conexion a la bbdd
@@ -18,7 +19,7 @@ if ($mysqli->connect_errno){
     header('location:../muro.php?error='.$error);
 }
 
-$sql="SELECT nombre,apellido1,login,id_usuario FROM usuarios WHERE apellido1 LIKE '%$apellido%'";
+$sql="SELECT nombre,apellido1,login,id_usuario FROM usuarios WHERE apellido1 LIKE '%$apellido%' AND id_usuario!=$id_usuario";
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
@@ -40,11 +41,24 @@ if(!($resultado=$mysqli->query($sql))){
     <?php
 
     $fila=$resultado->fetch_assoc();
-    while ($fila){
-        echo "<a href='../muro/otro.php?id=".$fila['id_usuario']."'>".$fila['nombre']." ".$fila['apellido1']." (".$fila['login'].")</a><br>";
-        $fila=$resultado->fetch_assoc();
+    if ($fila) {
+        while ($fila) {
+            echo "<a href='../muro/otro.php?id=" . $fila['id_usuario'] . "'>" . $fila['nombre'] . " " . $fila['apellido1'] . " (" . $fila['login'] . ")</a><br>";
+            $fila = $resultado->fetch_assoc();
+        }
+    }else{
+        echo "<p>No se han encontrado resultados</p>";
     }
     ?>
+    <button id="atras">Atras</button>
 </main>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("#atras").on("click",function () {
+            window.location.href = "buscar.html";
+        });
+    })
+</script>
 </body>
 </html>

@@ -26,7 +26,7 @@ if(!($resultado=$mysqli->query($sql))){
     header('location:../muro.php?error='.$error);
 }
 
-$sql_puntuacion="SELECT puntuacion FROM votos";
+$sql_puntuacion="SELECT puntuacion FROM votos WHERE id_mensaje=$id";
 
 if(!($resultado_puntuacion=$mysqli->query($sql_puntuacion))){
     $error=$mysqli->errno;

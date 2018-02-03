@@ -13,6 +13,14 @@
     <textarea name="mensaje" id="mensaje" cols="30" rows="10" placeholder="Escriba su mensaje"></textarea><br>
     <button>Añadir Mensaje</button>
 </form>
-<button>Atrás</button>
+<button id="atras">Atrás</button>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("#atras").on("click",function () {
+            window.location.href = "../muro.php";
+        });
+    })
+</script>
 </body>
 </html>

@@ -81,7 +81,11 @@ if (isset($error)){
         });
         $(".eliminar").on("click",function () {
             var id=$(this).attr("id");
-            window.location.href="eliminar/eliminar.php?id="+id;
+            var eliminar=confirm("Estas seguro de eliminar el mensaje");
+            if (eliminar==true) {
+                console.log(eliminar);
+                window.location.href = "eliminar/eliminar.php?id=" + id;
+            }
         });
         $("#buscar").on("click",function () {
             window.location.href="buscar/buscar.html";

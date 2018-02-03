@@ -46,6 +46,14 @@ $fila=$resultado->fetch_assoc();
     <input type="number" value="<?=$id?>" name="id" hidden>
     <button>Modificar Mensaje</button>
 </form>
-<button>Atrás</button>
+<button id="atras">Atrás</button>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $("#atras").on("click",function () {
+            window.location.href = "../muro.php";
+        });
+    })
+</script>
 </body>
 </html>
