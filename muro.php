@@ -1,5 +1,6 @@
 <?php
 session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:index.php");
 $id_usuario=$_SESSION["id_usuario"];
 if (isset($_GET["error"])) $error=$_GET["error"];
 
@@ -13,6 +14,7 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
+    $mysqli->close();
     header('location:index.php?error='.$error);
 }
 
@@ -42,11 +44,12 @@ if ($mysqli->connect_errno){
 
         if(!($resultado=$mysqli->query($sql))){
             $error=$mysqli->errno;
-            //header('location:index.php?error='.$error);
+            $resultado->close();
+            $mysqli->close();
+            header('location:index.php?error='.$error);
         }
         echo "<div id='mensajes'>";
         $fila=$resultado->fetch_assoc();
-        //$_SESSION["id_usuario"]=$fila["id_usuario"];
             while($fila){
                 echo "<div id='".$fila['id_mensaje']."'>";
                     echo "<p>".$fila['texto']."</p>";
@@ -55,6 +58,8 @@ if ($mysqli->connect_errno){
                 echo "</div>";
                 $fila=$resultado->fetch_assoc();
             }
+            $resultado->close();
+            $mysqli->close();
         echo "</div>";
         ?>
 </main>
@@ -64,7 +69,7 @@ if (isset($error)){
     if ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
     elseif ($error==1136) echo "<p>Error al introducir los datos a la base de datos</p>";
     elseif ($error==1) echo "<p>Error con los datos</p>";
-    elseif ($error==1064) echo "<p>Error al modificar</p>";
+    elseif ($error==1064) echo "<p>Error de sintaxis</p>";
     else echo "<p>Error</p>";
     echo "</div>";
 }

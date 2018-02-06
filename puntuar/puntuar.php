@@ -1,10 +1,11 @@
 <?php
 session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:../index.php");
 if (isset($_GET["id"])==false){
-    //header("location:../muro.php?error=1");
+    header("location:../muro.php?error=1");
 }else{
     if ($_GET["id"]==''){
-        //header("location:../muro.php?error=1");
+        header("location:../muro.php?error=1");
     }else{
         $id=$_GET["id"];
     }

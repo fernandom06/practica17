@@ -1,12 +1,14 @@
 <?php
 session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:../index.php");
 if (isset($_GET["id"])==false){
-    //header("location:../muro.php?error=1");
+    header("location:../muro.php?error=1");
 }else{
     if ($_GET["id"]==''){
-        //header("location:../muro.php?error=1");
+        header("location:../muro.php?error=1");
     }else{
         $id=$_GET["id"];
+        $id_usuario=$_SESSION["id_usuario"];
     }
 }
 
@@ -16,21 +18,35 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
-    header('location:../muro.php?error='.$error);
+    $mysqli->close();
+    header("location:../muro.php?error=".$error);
 }
 
 $sql="SELECT texto,id_mensaje FROM mensajes WHERE id_mensaje=$id";
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
-    header('location:../muro.php?error='.$error);
+    $resultado->close();
+    $mysqli->close();
+    header("location:../muro.php?error=".$error);
+}
+
+$sql_enlace="SELECT count(*) num FROM votos WHERE id_mensaje=$id AND id_usuario=$id_usuario";
+
+if(!($resultado_enlace=$mysqli->query($sql_enlace))){
+    $error=$mysqli->errno;
+    $resultado->close();
+    $mysqli->close();
+    header("location:../muro.php?error=".$error);
 }
 
 $sql_puntuacion="SELECT puntuacion FROM votos WHERE id_mensaje=$id";
 
 if(!($resultado_puntuacion=$mysqli->query($sql_puntuacion))){
     $error=$mysqli->errno;
-    header('location:../muro.php?error='.$error);
+    $resultado->close();
+    $mysqli->close();
+    header("location:../muro.php?error=".$error);
 }
 $puntuacion=0;
 $contador=0;
@@ -62,8 +78,12 @@ if ($contador>0) $puntuacion_media=$puntuacion/$contador;
 if ($puntuacion_media==0) echo "<p>Este mensaje todavia no tiene votos</p>";
 else echo "<p>La puntuacion media del mensaje es de: <strong>$puntuacion_media</strong></p>";
 $fila=$resultado->fetch_assoc();
-echo "<a href='puntuar.php?id=".$fila['id_mensaje']."'>Puntuar Mensaje</a>";
-echo "<p>".$fila['texto']."</p>"
+$enlace=$resultado_enlace->fetch_assoc();
+if ($enlace["num"]==0) echo "<a href='puntuar.php?id=".$fila['id_mensaje']."'>Puntuar Mensaje</a>";
+else echo "<p>Ya has puntuado en este mensaje</p>";
+echo "<p>".$fila['texto']."</p>";
+$resultado->close();
+$mysqli->close();
 ?>
 </main>
 </body>

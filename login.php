@@ -12,6 +12,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false){
     //controlamos si existe un error en la conexion con la base de datos
     if ($mysqli->connect_errno){
         $error=$mysqli->connect_errno;
+        $mysqli->close();
         header('location:index.php?error='.$error);
     }
 
@@ -19,18 +20,24 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false){
 
     if(!($resultado=$mysqli->query($sql))){
         $error=$mysqli->errno;
+        $resultado->close();
+        $mysqli->close();
         header('location:index.php?error='.$error);
     }
 
     $fila=$resultado->fetch_assoc();
 
     if ($fila["numero"]==1){
+        $resultado->close();
+        $mysqli->close();
         session_start();
         $_SESSION["login"]=$login;
         $_SESSION["id_usuario"]=$fila["id_usuario"];
         header("location:muro.php");
     }
     else{
+        $resultado->close();
+        $mysqli->close();
         header("location:index.php?error=5");
     }
 }

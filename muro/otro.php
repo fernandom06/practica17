@@ -1,9 +1,11 @@
 <?php
+session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:../index.php");
 if (isset($_GET["id"])==false){
-    //header();
+    header("location:../muro.php?error=1");
 }else{
     if ($_GET["id"]==''){
-        //header();
+        header("location:../muro.php?error=1");
     }else{
         $id=$_GET["id"];
     }
@@ -15,6 +17,7 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
+    $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
 
@@ -25,6 +28,8 @@ $sql="SELECT m.texto texto,m.id_mensaje id_mensaje, u.id_usuario id_usuario, u.l
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
+    $resultado->close();
+    $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
 $fila=$resultado->fetch_assoc();
@@ -44,6 +49,7 @@ $fila=$resultado->fetch_assoc();
     <h1>Bienvenido a tu muro <?=$fila["login"]?></h1>
     <button id="muro">Volver a tu muro</button>
 </header>
+<main>
 <?php
 echo "<div id='mensajes'>";
 while($fila){
@@ -53,8 +59,11 @@ while($fila){
     echo "</div>";
     $fila=$resultado->fetch_assoc();
 }
+$resultado->close();
+$mysqli->close();
 echo "</div>";
 ?>
+</main>
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script>
     $(function () {

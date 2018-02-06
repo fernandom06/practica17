@@ -1,9 +1,11 @@
 <?php
+session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:../index.php");
 if (isset($_GET["id"])==false){
-    header("location:../muro.php=error=1");
+    header("location:../muro.php?error=1");
 }else{
     if($_GET["id"]==''){
-        header("location:../muro.php=error=1");
+        header("location:../muro.php?error=1");
     }else{
         $id=substr($_GET["id"],1);
 
@@ -16,6 +18,7 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
+    $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
 
@@ -23,6 +26,8 @@ $sql="SELECT texto FROM mensajes WHERE id_mensaje='$id'";
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
+    $resultado->close();
+    $mysqli->close();
     header('location:muro.php?error='.$error);
 }
 
@@ -44,6 +49,10 @@ $fila=$resultado->fetch_assoc();
 <form action="mod.php" method="post">
     <textarea name="mensaje" id="mensaje" cols="30" rows="10"><?=$fila['texto']?></textarea><br>
     <input type="number" value="<?=$id?>" name="id" hidden>
+    <?php
+    $resultado->close();
+    $mysqli->close();
+    ?>
     <button>Modificar Mensaje</button>
 </form>
 <button id="atras">Atrás</button>

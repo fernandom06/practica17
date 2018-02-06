@@ -1,5 +1,6 @@
 <?php
 session_start();
+if (isset($_SESSION["id_usuario"])==false) header("location:../index.php");
 if (isset($_GET["nombre"])==false){
     header("location:../muro.php?error=1");
 }else{
@@ -17,6 +18,7 @@ $mysqli=new mysqli('localhost','red_social','red_social','red_social');
 //controlamos si existe un error en la conexion con la base de datos
 if ($mysqli->connect_errno){
     $error=$mysqli->connect_errno;
+    $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
 
@@ -24,6 +26,8 @@ $sql="SELECT nombre,apellido1,login,id_usuario FROM usuarios WHERE nombre LIKE '
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
+    $resultado->close();
+    $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
 ?>
@@ -50,6 +54,8 @@ if(!($resultado=$mysqli->query($sql))){
     }else{
         echo "<p>No se han encontrado resultados</p>";
     }
+    $resultado->close();
+    $mysqli->close();
     ?>
     <button id="atras">Atras</button>
 </main>

@@ -33,17 +33,20 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
         //controlamos si existe un error en la conexion con la base de datos
         if ($mysqli->connect_errno){
             $error=$mysqli->connect_errno;
+            $mysqli->close();
             header('location:index.php?error='.$error);
         }
 
         //control de errores con la bbdd
         if(!($mysqli->query($sql))){
             $error=$mysqli->errno;
+            $mysqli->close();
             header('location:index.php?error='.$error);
         }
         session_start();
         $_SESSION["login"]=$login;
         $_SESSION["id_usuario"]=$mysqli->insert_id;
+        $mysqli->close();
         header('location:muro.php');
     }
 }
