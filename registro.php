@@ -47,7 +47,7 @@ if (isset($_POST["login"])==false || isset($_POST["password"])==false || isset($
         $_SESSION["login"]=$login;
         $_SESSION["id_usuario"]=$mysqli->insert_id;
         $mysqli->close();
-        header('location:muro.php');
+        header('location:muro.php?a=1');
     }
 }
 

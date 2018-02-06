@@ -25,11 +25,9 @@ $sql="INSERT INTO mensajes(texto, id_usuario) VALUES ('$mensaje','$id_usuario')"
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
-    $resultado->close();
     $mysqli->close();
     header('location:../muro.php?error='.$error);
 }
-$resultado->close();
 $mysqli->close();
 header("location:../muro.php")
 

@@ -27,16 +27,28 @@ if ($mysqli->connect_errno){
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Muro</title>
+    <link rel="stylesheet" href="estilos/bootstrap.css">
+    <style>
+        .mensaje{
+            border-radius:25px ;
+            padding: 10px 10px 10px 10px;
+            margin:10px 0 10px 0;
+            font-size: 18px;
+            background-color: #ECEEEF;
+        }
+    </style>
 </head>
 <body>
-<header>
+<header class="jumbotron">
     <h1>Bienvenido a tu muro <?=$_SESSION["login"]?></h1>
-    <button id="mas">Añadir mensaje</button>
-    <button id="buscar">Buscar Usuarios</button>
-    <button id="salir">Cerrar Sesion</button>
 </header>
-<main>
-        <?php
+<main class="container">
+    <div>
+        <button class="btn btn-secondary" id="mas">Añadir mensaje</button>
+        <button class="btn btn-secondary" id="buscar">Buscar Usuarios</button>
+        <button class="btn btn-secondary" id="salir">Cerrar Sesion</button>
+    </div>
+    <?php
         $sql="SELECT m.texto texto,m.id_mensaje id_mensaje, u.id_usuario id_usuario
                 FROM mensajes m
                 JOIN usuarios u USING (id_usuario)
@@ -51,10 +63,10 @@ if ($mysqli->connect_errno){
         echo "<div id='mensajes'>";
         $fila=$resultado->fetch_assoc();
             while($fila){
-                echo "<div id='".$fila['id_mensaje']."'>";
+                echo "<div id='".$fila['id_mensaje']."' class='mensaje'>";
                     echo "<p>".$fila['texto']."</p>";
-                    echo "<button class='eliminar' id='e".$fila['id_mensaje']."'>Eliminar Mensaje</button>";
-                    echo "<button class='modificar' id='m".$fila['id_mensaje']."'>Modificar Mensaje</button>";
+                    echo "<button class='eliminar btn btn-danger' id='e".$fila['id_mensaje']."'>Eliminar Mensaje</button> ";
+                    echo "<button class='modificar btn btn-info' id='m".$fila['id_mensaje']."'>Modificar Mensaje</button>";
                 echo "</div>";
                 $fila=$resultado->fetch_assoc();
             }
@@ -64,8 +76,13 @@ if ($mysqli->connect_errno){
         ?>
 </main>
 <?php
+if (isset($_GET["a"])){
+    echo "<div class='alert alert-success'>";
+    echo "<p>Registro completado</p>";
+    echo "</div>";
+}
 if (isset($error)){
-    echo "<div id='error'>";
+    echo "<div id='error' class='alert alert-danger'>";
     if ($error==2002 || $error==1045 || $error==1044) echo "<p>Problema con la base de datos</p>";
     elseif ($error==1136) echo "<p>Error al introducir los datos a la base de datos</p>";
     elseif ($error==1) echo "<p>Error con los datos</p>";

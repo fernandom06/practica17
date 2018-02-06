@@ -68,20 +68,21 @@ if ($contador>0) $puntuacion_media=$puntuacion/$contador;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="../estilos/bootstrap.css">
 </head>
 <body>
-<header>
+<header class="jumbotron">
     <h1>Detalles del mensaje</h1>
 </header>
-<main>
+<main class="container">
 <?php
 if ($puntuacion_media==0) echo "<p>Este mensaje todavia no tiene votos</p>";
 else echo "<p>La puntuacion media del mensaje es de: <strong>$puntuacion_media</strong></p>";
 $fila=$resultado->fetch_assoc();
 $enlace=$resultado_enlace->fetch_assoc();
-if ($enlace["num"]==0) echo "<a href='puntuar.php?id=".$fila['id_mensaje']."'>Puntuar Mensaje</a>";
+if ($enlace["num"]==0) echo "<p><a href='puntuar.php?id=".$fila['id_mensaje']."'>Puntuar Mensaje</a></p>";
 else echo "<p>Ya has puntuado en este mensaje</p>";
-echo "<p>".$fila['texto']."</p>";
+echo "<p><strong>Mensaje:</strong> ".$fila['texto']."</p>";
 $resultado->close();
 $mysqli->close();
 ?>

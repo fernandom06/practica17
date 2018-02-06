@@ -38,11 +38,12 @@ if(!($resultado=$mysqli->query($sql))){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="../estilos/bootstrap.css">
+    <title>Busquedo por login</title>
 </head>
 <body>
-<header><h1>Resultados</h1></header>
-<main>
+<header class="jumbotron"><h1>Resultados</h1></header>
+<main class="container">
     <?php
 
     $fila=$resultado->fetch_assoc();
@@ -57,7 +58,7 @@ if(!($resultado=$mysqli->query($sql))){
     $resultado->close();
     $mysqli->close();
     ?>
-    <button id="atras">Atras</button>
+    <button id="atras" class="btn btn-light">Atras</button>
 </main>
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script>

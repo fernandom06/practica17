@@ -27,11 +27,9 @@ $sql="INSERT INTO votos(puntuacion, id_mensaje, id_usuario) VALUES ($puntuacion,
 
 if(!($resultado=$mysqli->query($sql))){
     $error=$mysqli->errno;
-    $resultado->close();
     $mysqli->close();
     header("location:../muro.php?error=".$error);
 }
-$resultado->close();
 $mysqli->close();
 header("location:mensaje.php?id=".$id);
 ?>

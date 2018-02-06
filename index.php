@@ -11,55 +11,48 @@ if (isset($_GET["error"])){
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Portada</title>
-    <style>
-        #login{
-            display: none;
-        }
-        #registro{
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos/bootstrap.css">
 </head>
 <body>
-<header>
+<header class="jumbotron">
     <h1>Red Social</h1>
 </header>
-<main>
-    <div id="botones">
-        <button id="loginb">Login</button>
-        <button id="registrob">Registro</button>
-    </div>
-    <div id="login">
-        <form action="login.php" method="post">
-            <label for="loginl">Login</label>
-            <input type="text" id="loginl" name="login"><br>
-            <label for="passwordl">Password</label>
-            <input type="password" id="passwordl" name="password"><br>
-            <button>Entrar</button>
-        </form>
-    </div>
-    <div id="registro">
-        <form action="registro.php" method="post">
-            <label for="loginr">Login*</label>
-            <input type="text" id="loginr" name="login"><br>
-            <label for="passwordr">Password* (minimo 8 caracteres)</label>
-            <input type="password" id="passwordr" name="password"><br>
-            <label for="passwordc">Repite la contraseña</label>
-            <input type="password" id="passwordc" name="passwordc"><br>
-            <label for="nombre">Nombre*</label>
-            <input type="text" id="nombre" name="nombre"><br>
-            <label for="apelldio1">Primer Apellido*</label>
-            <input type="text" id="apelldio1" name="apellido1"><br>
-            <label for="apellido2">Segundo Apellido</label>
-            <input type="text" id="apellido2" name="apellido2"><br>
-            <button>Registrarse</button>
-            <p>Los campos marcados con * son obligatorios</p>
-        </form>
+<main class="container">
+    <div class="row">
+        <div id="login" class="col-6">
+            <h2>Login</h2>
+            <form action="login.php" method="post" class="form-group">
+                <label for="loginl">Login</label>
+                <input type="text" id="loginl" name="login" class="form-control"><br>
+                <label for="passwordl">Password</label>
+                <input type="password" id="passwordl" name="password" class="form-control"><br>
+                <button class="btn btn-primary">Entrar</button>
+            </form>
+        </div>
+        <div id="registro" class="col-6">
+            <h2>Registro</h2>
+            <form action="registro.php" method="post" class="form-group">
+                <label for="loginr">Login*</label>
+                <input type="text" id="loginr" name="login" class="form-control"><br>
+                <label for="passwordr">Password* (minimo 8 caracteres)</label>
+                <input type="password" id="passwordr" name="password" class="form-control"><br>
+                <label for="passwordc">Repite la contraseña</label>
+                <input type="password" id="passwordc" name="passwordc" class="form-control"><br>
+                <label for="nombre">Nombre*</label>
+                <input type="text" id="nombre" name="nombre" class="form-control"><br>
+                <label for="apelldio1">Primer Apellido*</label>
+                <input type="text" id="apelldio1" name="apellido1" class="form-control"><br>
+                <label for="apellido2">Segundo Apellido</label>
+                <input type="text" id="apellido2" name="apellido2" class="form-control"><br>
+                <button class="btn btn-primary">Registrarse</button>
+                <p>Los campos marcados con * son obligatorios</p>
+            </form>
+        </div>
     </div>
     <?php
     //Capa para el error
     if (isset($error)){
-        echo "<div id='error'>";
+        echo "<div id='error' class='alert alert-danger'>";
         if ($error==1 || $error==2 || $error==4) echo "<p>Faltan datos</p>";
         elseif ($error==3) echo "<p>La contraseña no cumple los requisitos o no coinciden</p>";
         elseif ($error==5) echo "<p>Usuario o contraseña incorrectos</p>";
@@ -72,16 +65,5 @@ if (isset($_GET["error"])){
     }
     ?>
 </main>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script>
-    $(function () {
-        $("#loginb").on("click",function () {
-            $("#login").toggle();
-        });
-        $("#registrob").on("click",function () {
-            $("#registro").toggle();
-        })
-    })
-</script>
 </body>
 </html>

@@ -42,20 +42,31 @@ $fila=$resultado->fetch_assoc();
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Muro de <?=$fila['login']?></title>
+    <link rel="stylesheet" href="../estilos/bootstrap.css">
+    <style>
+        .mensaje{
+            border-radius:25px ;
+            padding: 10px 10px 10px 10px;
+            margin:10px 0 10px 0;
+            font-size: 18px;
+            background-color: #ECEEEF;
+        }
+    </style>
+
 </head>
 <body>
-<header>
+<header class="jumbotron">
     <h1>Bienvenido a tu muro <?=$fila["login"]?></h1>
-    <button id="muro">Volver a tu muro</button>
 </header>
-<main>
-<?php
+<main class="container">
+    <button id="muro" class="btn btn-secondary">Volver a tu muro</button>
+    <?php
 echo "<div id='mensajes'>";
 while($fila){
-    echo "<div>";
+    echo "<div class='mensaje'>";
     echo "<p>".$fila['texto']."</p>";
-    echo "<button class='detalle' id='".$fila['id_mensaje']."'>Detalles del mensaje</button>";
+    echo "<button class='detalle btn btn-primary' id='".$fila['id_mensaje']."'>Detalles del mensaje</button>";
     echo "</div>";
     $fila=$resultado->fetch_assoc();
 }
